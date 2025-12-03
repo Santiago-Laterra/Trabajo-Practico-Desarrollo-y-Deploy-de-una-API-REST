@@ -7,16 +7,14 @@ dotenv.config()
 
 const SECRET_KEY = process.env.JWT_SECRET!
 
+
 class AuthController {
-  // http://localhost:3000/auth/register
-  // method: POST
-  // body: {"email": "gabi@gmail.com", "password": pepe123}
   static register = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const { email, password } = req.body
 
       if (!email || !password) {
-        return res.status(400).json({ success: false, error: "Datos invalidos" })
+        return res.status(400).json({ success: false, error: "Email y contraseña son requeridos" })
       }
 
       const user = await User.findOne({ email })
@@ -45,7 +43,7 @@ class AuthController {
       const { email, password } = req.body
 
       if (!email || !password) {
-        return res.status(400).json({ success: false, error: "Datos invalidos" })
+        return res.status(400).json({ success: false, error: "Email y contraseña son requeridos" })
       }
 
       const user = await User.findOne({ email })
@@ -60,12 +58,20 @@ class AuthController {
       if (!isValid) {
         return res.status(401).json({ success: false, error: "No autorizado" })
       }
+      if (!SECRET_KEY) {
+        console.error("JWT no está definido")
+        process.exit(1)
+      }
 
-      const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: "1h" })
+      const token = jwt.sign(
+        { id: user._id, email: user.email } //payload
+        , SECRET_KEY,
+        { expiresIn: "1h" }
+      )
       res.json({ success: true, token })
     } catch (e) {
       const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: "Error al iniciar sesion" })
     }
   }
 }
