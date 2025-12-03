@@ -29,8 +29,18 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 
     next()
   } catch (e) {
+
+    //Manejo de errores en JWT por nombres de errores
     const error = e as Error
-    res.status(401).json({ succes: false, error: error.message })
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ success: false, error: "El token expiró" })
+    }
+    if (error.name === "JsonWebTokenError") {
+      return res.status(401).json({ success: false, error: "Token inválido" })
+    }
+
+
+    res.status(401).json({ succes: false, error: "Error al procesar el token" })
   }
 }
 
