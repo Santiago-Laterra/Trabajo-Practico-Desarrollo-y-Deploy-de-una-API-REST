@@ -10,6 +10,8 @@ import dotenv from "dotenv"
 import logger from "./config/logger"
 import transporter from "./config/emailConfig"
 import createTemplate from "./templates/emailTemplate"
+
+
 dotenv.config()
 
 declare global {
@@ -21,21 +23,29 @@ declare global {
 }
 
 const PORT = process.env.PORT
+const SECRET_KEY = process.env.JWT_SECRET
+
+//validacion de la secret_key
+if (!SECRET_KEY) {
+  console.error("JWT_SECRET no está definido")
+  process.exit(1)
+}
+
 
 const app = express()
 
-app.use(cors())
+app.use(cors()) //CORS para permitir peticiones desde el frontend
 app.use(express.json())
 app.use(logger)
-
 app.use(morgan("dev"))
 
+
+
 app.get("/", (__: Request, res: Response) => {
-  res.json({ status: true })
+  res.json({ status: true, message: "API REST funcionando" })
 })
 
 app.use("/auth", authRouter)
-// http://localhost:3000/products?
 app.use("/products", productRouter)
 
 // enviar correo electrónico
