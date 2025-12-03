@@ -47,7 +47,7 @@ class ProductController {
       res.status(200).json({ success: true, data: product })
     } catch (e) {
       const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: "error interno al obtener el producto" })
     }
   }
 
@@ -62,9 +62,6 @@ class ProductController {
       }
 
       // VALIDACIONES DE INPUT
-      // validar el tipo de data que recibo del front
-      // 1 - si para la validación creo el producto
-      // 2 - si no pasa la validación retorno una respuesta 400 al front
 
       const validator = createProductSchema.safeParse(body)
 
@@ -78,7 +75,7 @@ class ProductController {
       res.status(201).json({ succes: true, data: newProduct })
     } catch (e) {
       const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: "Error interno al agregar el producto" })
     }
   }
 
@@ -104,7 +101,7 @@ class ProductController {
       res.json({ success: true, data: updatedProduct })
     } catch (e) {
       const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: "error interno al actualizar el producto" })
     }
   }
 
@@ -124,8 +121,8 @@ class ProductController {
 
       res.json({ success: true, data: deletedProduct })
     } catch (e) {
-      const error = e as Error
-      res.status(500).json({ error: error.message })
+
+      res.status(500).json({ success: false, error: "error interno al borrar el producto" })
     }
   }
 }
