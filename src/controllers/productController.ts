@@ -1,6 +1,3 @@
-// FUNCIONES QUE SANITIZAN DATOS DE ENTRADA Y RESPONDEN AL CLIENTE
-// LA REQUEST Y EL RESPONSE SIEMPRE ESTARÁN SOLO EN LOS CONTROLLERS
-
 import { Request, Response } from "express"
 import Product from "../model/ProductModel"
 import { Types } from "mongoose"
@@ -13,11 +10,11 @@ class ProductController {
 
       const filter: any = {}
 
+      //Validaciones 
       if (name) filter.name = new RegExp(String(name), "i")
       if (stock) filter.stock = Number(stock)
       if (category) filter.category = new RegExp(String(category), "i")
       if (minPrice || maxPrice) {
-
 
         filter.price = {}
         // maxPrice -> si tengo precio máximo quiero un objeto con un precio menor
@@ -29,8 +26,7 @@ class ProductController {
       const products = await Product.find(filter)
       res.json({ success: true, data: products })
     } catch (e) {
-      const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: "Error interno al obtener los productos" })
     }
   }
 
