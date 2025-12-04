@@ -1,32 +1,32 @@
 import { Request, Response } from "express"
-import Product from "../model/ProductModel"
+import Product from "../model/MovieModel"
 import { Types } from "mongoose"
 import { createProductSchema, updatedProductSchema } from "../validators/productValidator"
 
-class ProductController {
-  static getAllProducts = async (req: Request, res: Response): Promise<void | Response> => {
+class MovieController {
+  static getAllmovies = async (req: Request, res: Response): Promise<void | Response> => {
     try {
-      const { name, stock, category, minPrice, maxPrice } = req.query
+      const { title, synopsis, minRating, maxRating, genre, releaseYear, director } = req.query
 
       const filter: any = {}
 
-      //Validaciones 
-      if (name) filter.name = new RegExp(String(name), "i")
-      if (stock) filter.stock = Number(stock)
-      if (category) filter.category = new RegExp(String(category), "i")
-      if (minPrice || maxPrice) {
+      // Validaciones 
+      if (title) filter.title = new RegExp(String(title), "i")
+      if (synopsis) filter.synopsis = new RegExp(String(synopsis), "i")
+      if (director) filter.director = new RegExp(String(director), "i")
+      if (releaseYear) filter.releaseYear = Number(releaseYear)
+      if (genre) filter.genre = new RegExp(String(genre), "i")
+      if (minRating || maxRating) {
 
-        filter.price = {}
-        // maxPrice -> si tengo precio máximo quiero un objeto con un precio menor
-        if (minPrice) filter.price.$gte = minPrice
-        // minPrice -> si tengo un precio mínimo quiero un objeto con un precio mas grande.
-        if (maxPrice) filter.price.$lte = maxPrice
+        filter.rating = {}
+        if (minRating) filter.price.$gte = minRating
+        if (maxRating) filter.price.$lte = maxRating
       }
+      const movie = await Product.find(filter)
+      res.json({ success: true, data: movie })
 
-      const products = await Product.find(filter)
-      res.json({ success: true, data: products })
     } catch (e) {
-      res.status(500).json({ success: false, error: "Error interno al obtener los productos" })
+      res.status(500).json({ success: false, error: "Error interno al obtener las peliculas" })
     }
   }
 
@@ -127,4 +127,4 @@ class ProductController {
   }
 }
 
-export default ProductController
+export default MovieController

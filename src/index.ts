@@ -2,7 +2,7 @@
 import express, { Request, Response } from "express"
 import cors from "cors"
 import connectDB from "./config/mongodb"
-import productRouter from "./routes/productRoutes"
+import productRouter from "./routes/movieRouters"
 import authRouter from "./routes/authRouter"
 import morgan from "morgan"
 import IUserTokenPayload from "./interfaces/IUserTokenPayload"
