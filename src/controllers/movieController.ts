@@ -78,7 +78,7 @@ class MovieController {
     }
   }
 
-  static updateProduct = async (req: Request, res: Response): Promise<void | Response> => {
+  static updateMovie = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const { id } = req.params
       const { body } = req
@@ -91,16 +91,16 @@ class MovieController {
         return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
       }
 
-      const updatedProduct = await Movie.findByIdAndUpdate(id, validator.data, { new: true })
+      const updatedMovie = await Movie.findByIdAndUpdate(id, validator.data, { new: true })
 
-      if (!updatedProduct) {
-        return res.status(404).json({ success: false, error: "Producto no encontrado" })
+      if (!updatedMovie) {
+        return res.status(404).json({ success: false, error: "Pelicula no encontrada" })
       }
 
-      res.json({ success: true, data: updatedProduct })
+      res.json({ success: true, data: updatedMovie })
     } catch (e) {
       const error = e as Error
-      res.status(500).json({ success: false, error: "error interno al actualizar el producto" })
+      res.status(500).json({ success: false, error: "error interno al actualizar la pelicula" })
     }
   }
 
