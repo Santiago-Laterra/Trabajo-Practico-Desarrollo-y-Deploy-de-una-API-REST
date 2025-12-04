@@ -10,4 +10,4 @@ const productSchemaValidator = z.object({
 
 export const createMovieSchema = productSchemaValidator
 
-export const updatedProductSchema = productSchemaValidator.partial()
+export const updatedMovieSchema = productSchemaValidator.partial()

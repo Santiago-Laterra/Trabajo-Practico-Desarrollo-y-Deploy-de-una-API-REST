@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import Movie from "../model/MovieModel"
 import { Types } from "mongoose"
-import { createMovieSchema, updatedProductSchema } from "../validators/productValidator"
+import { createMovieSchema, updatedMovieSchema } from "../validators/productValidator"
 
 class MovieController {
   static getAllmovies = async (req: Request, res: Response): Promise<void | Response> => {
@@ -83,9 +83,9 @@ class MovieController {
       const { id } = req.params
       const { body } = req
 
-      if (!Types.ObjectId.isValid(id)) res.status(400).json({ succes: false, error: "ID Inválido" })
+      if (!Types.ObjectId.isValid(id)) res.status(400).json({ success: false, error: "ID Inválido" })
 
-      const validator = updatedProductSchema.safeParse(body)
+      const validator = updatedMovieSchema.safeParse(body)
 
       if (!validator.success) {
         return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
