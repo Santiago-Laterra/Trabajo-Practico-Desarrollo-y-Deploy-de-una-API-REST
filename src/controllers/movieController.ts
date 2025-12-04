@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
-import Product from "../model/MovieModel"
+import Movie from "../model/MovieModel"
 import { Types } from "mongoose"
-import { createProductSchema, updatedProductSchema } from "../validators/productValidator"
+import { createMovieSchema, updatedProductSchema } from "../validators/productValidator"
 
 class MovieController {
   static getAllmovies = async (req: Request, res: Response): Promise<void | Response> => {
@@ -22,7 +22,7 @@ class MovieController {
         if (minRating) filter.price.$gte = minRating
         if (maxRating) filter.price.$lte = maxRating
       }
-      const movie = await Product.find(filter)
+      const movie = await Movie.find(filter)
       res.json({ success: true, data: movie })
 
     } catch (e) {
@@ -38,7 +38,7 @@ class MovieController {
         return res.status(400).json({ success: false, error: "ID Inválido" })
       }
 
-      const movie = await Product.findById(id)
+      const movie = await Movie.findById(id)
 
       if (!movie) {
         return res.status(404).json({ success: false, error: "Pelicula no encontrada" })
@@ -51,28 +51,27 @@ class MovieController {
     }
   }
 
-  static addProduct = async (req: Request, res: Response): Promise<void | Response> => {
+  static addMovie = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const { body } = req
+      const { title, synopsis, rating, genre, releaseYear, director } = body
 
-      const { name, description, price, category, stock } = body
-
-      if (!name || !description || !price || !category || !stock) {
-        return res.status(400).json({ message: "Todos los campos son requeridos" })
+      if (!title || !synopsis || !rating || !genre || !releaseYear || !director) {
+        return res.status(400).json({ success: false, error: "Todos los campos son requeridos" })
       }
 
       // VALIDACIONES DE INPUT
 
-      const validator = createProductSchema.safeParse(body)
+      const validator = createMovieSchema.safeParse(body)
 
       if (!validator.success) {
         return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
       }
 
-      const newProduct = new Product(validator.data)
+      const newMovie = new Movie(validator.data)
 
-      await newProduct.save()
-      res.status(201).json({ succes: true, data: newProduct })
+      await newMovie.save()
+      res.status(201).json({ succes: true, data: newMovie })
     } catch (e) {
       const error = e as Error
       res.status(500).json({ success: false, error: "Error interno al agregar el producto" })
@@ -92,7 +91,7 @@ class MovieController {
         return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
       }
 
-      const updatedProduct = await Product.findByIdAndUpdate(id, validator.data, { new: true })
+      const updatedProduct = await Movie.findByIdAndUpdate(id, validator.data, { new: true })
 
       if (!updatedProduct) {
         return res.status(404).json({ success: false, error: "Producto no encontrado" })
@@ -113,7 +112,7 @@ class MovieController {
         return res.status(400).json({ error: "ID Inválido" });
       }
 
-      const deletedProduct = await Product.findByIdAndDelete(id)
+      const deletedProduct = await Movie.findByIdAndDelete(id)
 
       if (!deletedProduct) {
         return res.status(404).json({ success: false, error: "Producto no encontrado" })

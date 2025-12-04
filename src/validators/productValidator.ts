@@ -8,6 +8,6 @@ const productSchemaValidator = z.object({
   stock: z.number().positive()
 })
 
-export const createProductSchema = productSchemaValidator
+export const createMovieSchema = productSchemaValidator
 
 export const updatedProductSchema = productSchemaValidator.partial()
