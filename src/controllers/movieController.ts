@@ -104,24 +104,24 @@ class MovieController {
     }
   }
 
-  static deleteProduct = async (req: Request, res: Response): Promise<void | Response> => {
+  static deleteMovie = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const id = req.params.id
 
       if (!Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: "ID Inválido" });
+        return res.status(400).json({ success: false, error: "ID Inválido" });
       }
 
-      const deletedProduct = await Movie.findByIdAndDelete(id)
+      const deletedMovie = await Movie.findByIdAndDelete(id)
 
-      if (!deletedProduct) {
-        return res.status(404).json({ success: false, error: "Producto no encontrado" })
+      if (!deletedMovie) {
+        return res.status(404).json({ success: false, error: "Pelicula no encontrada" })
       }
 
-      res.json({ success: true, data: deletedProduct })
+      res.json({ success: true, data: deletedMovie })
     } catch (e) {
 
-      res.status(500).json({ success: false, error: "error interno al borrar el producto" })
+      res.status(500).json({ success: false, error: "error interno al borrar la pelicula" })
     }
   }
 }

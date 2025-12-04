@@ -15,6 +15,6 @@ movieRouter.get("/", movieController.getAllmovies)
 movieRouter.get("/:id", movieController.getMovie)
 movieRouter.post("/", authMiddleware, movieController.addMovie)
 movieRouter.patch("/:id", authMiddleware, movieController.updateMovie)
-movieRouter.delete("/:id", authMiddleware, movieController.deleteProduct)
+movieRouter.delete("/:id", authMiddleware, movieController.deleteMovie)
 
 export default movieRouter
