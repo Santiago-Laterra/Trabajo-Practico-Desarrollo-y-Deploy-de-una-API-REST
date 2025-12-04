@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import Movie from "../model/MovieModel"
 import { Types } from "mongoose"
-import { createMovieSchema, updatedMovieSchema } from "../validators/productValidator"
+import { createMovieSchema, updatedMovieSchema } from "../validators/movieValidator"
 
 class MovieController {
   static getAllmovies = async (req: Request, res: Response): Promise<void | Response> => {
