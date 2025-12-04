@@ -2,7 +2,10 @@ import { Request, Response } from "express"
 import bcrypt from "bcryptjs"
 import User from "../model/UserModel"
 import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
 
+
+dotenv.config()
 const SECRET_KEY = process.env.JWT_SECRET!
 
 
@@ -58,7 +61,7 @@ class AuthController {
       }
       if (!SECRET_KEY) {
         console.error("JWT no está definido")
-        process.exit(1)
+
       }
 
       const token = jwt.sign(

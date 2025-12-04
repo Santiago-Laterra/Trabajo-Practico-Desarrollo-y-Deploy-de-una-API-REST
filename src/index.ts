@@ -25,7 +25,6 @@ const SECRET_KEY = process.env.JWT_SECRET
 //validacion de la secret_key
 if (!SECRET_KEY) {
   console.error("JWT_SECRET no está definido")
-  process.exit(1)
 }
 
 
