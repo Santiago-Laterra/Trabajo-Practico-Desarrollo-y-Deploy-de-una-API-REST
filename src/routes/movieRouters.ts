@@ -12,7 +12,7 @@ const movieRouter = Router()
 // POST http://localhost:3000/products/
 
 movieRouter.get("/", movieController.getAllmovies)
-movieRouter.get("/:id", movieController.getProduct)
+movieRouter.get("/:id", movieController.getMovie)
 movieRouter.post("/", authMiddleware, movieController.addProduct)
 movieRouter.patch("/:id", authMiddleware, movieController.updateProduct)
 movieRouter.delete("/:id", authMiddleware, movieController.deleteProduct)
