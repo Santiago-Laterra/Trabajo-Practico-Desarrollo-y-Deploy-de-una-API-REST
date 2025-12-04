@@ -6,8 +6,8 @@ import dotenv from "dotenv"
 
 
 dotenv.config()
-const SECRET_KEY = process.env.JWT_SECRET!
 
+const SECRET_KEY = process.env.JWT_SECRET //as string
 
 class AuthController {
   static register = async (req: Request, res: Response): Promise<void | Response> => {
@@ -59,9 +59,9 @@ class AuthController {
       if (!isValid) {
         return res.status(401).json({ success: false, error: "No autorizado" })
       }
-      if (!SECRET_KEY) {
-        console.error("JWT no está definido")
 
+      if (!SECRET_KEY) {
+        throw new Error("Error interno del servidor");
       }
 
       const token = jwt.sign(
