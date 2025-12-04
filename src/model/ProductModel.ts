@@ -4,14 +4,15 @@
 // 2 - habilita los métodos de manipulación de data
 
 import { model, Model, Schema } from "mongoose"
-import IProduct from "../interfaces/IProduct"
+import IProduct from "../interfaces/IMovie"
 
 const productSchema = new Schema<IProduct>({
-  name: { type: String, required: true },
-  description: { type: String, default: "No tiene descripción" },
-  stock: { type: Number, default: 0, min: 0 },
-  category: { type: String, default: "No tiene categoria" },
-  price: { type: Number, default: 0, min: 0 }
+  title: { type: String, required: true },
+  synopsis: { type: String, default: "No tiene synopsis" },
+  rating: { type: Number, default: 0, min: 0 },
+  genre: { type: String, default: "No tiene genero" },
+  releaseYear: { type: Number, default: 0, min: 0 },
+  director: { type: String, default: "No tiene director" }
 }, {
   versionKey: false
 })
