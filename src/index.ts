@@ -6,7 +6,10 @@ import productRouter from "./routes/movieRouters"
 import authRouter from "./routes/authRouter"
 import morgan from "morgan"
 import IUserTokenPayload from "./interfaces/IUserTokenPayload"
+import dotenv from "dotenv"
 
+
+dotenv.config()
 
 declare global {
   namespace Express {
