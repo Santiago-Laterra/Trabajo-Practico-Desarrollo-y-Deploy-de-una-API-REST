@@ -8,8 +8,8 @@ import authMiddleware from "../middleware/authMiddleware"
 
 const movieRouter = Router()
 
-// TODAS LAS PETICIONES QUE LLEGAN AL PRODUCTROUTER EMPIEZAN CON
-// POST http://localhost:3000/products/
+// TODAS LAS PETICIONES QUE LLEGAN AL MOVIEROUTERS EMPIEZAN CON
+// POST http://localhost:3000/movies/
 
 movieRouter.get("/", movieController.getAllmovies)
 movieRouter.get("/:id", movieController.getMovie)

@@ -3,10 +3,10 @@ import { verify } from "jsonwebtoken"
 import IUserTokenPayload from "../interfaces/IUserTokenPayload"
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  const SECRET_KEY = process.env.JWT_SECRET!
+  const SECRET_KEY = process.env.JWT_SECRET
   const header = req.headers.authorization
 
-  //Si no exite la Secret_Key
+  //validacion de la secret_key, le asegura ts que no llega undefined
   if (!SECRET_KEY) {
     return res.status(500).json({ success: false, error: "Error de configuración del servidor." })
   }

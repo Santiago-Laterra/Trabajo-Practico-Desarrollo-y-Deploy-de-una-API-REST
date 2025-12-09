@@ -59,13 +59,13 @@ class AuthController {
       if (!isValid) {
         return res.status(401).json({ success: false, error: "No autorizado" })
       }
-
+      //validacion de la secret_key, le asegura ts que no llega undefined
       if (!SECRET_KEY) {
         throw new Error("Error interno del servidor");
       }
 
       const token = jwt.sign(
-        { id: user._id, email: user.email } //payload
+        { id: user._id, email: user.email } //payload le enviado el id del usuario y mail
         , SECRET_KEY,
         { expiresIn: "1h" }
       )

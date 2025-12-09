@@ -22,7 +22,7 @@ declare global {
 const PORT = process.env.PORT
 const SECRET_KEY = process.env.JWT_SECRET
 
-//validacion de la secret_key
+//validacion de la secret_key, le asegura ts que no llega undefined
 if (!SECRET_KEY) {
   console.error("JWT_SECRET no está definido")
 }
@@ -41,7 +41,7 @@ app.get("/", (__: Request, res: Response) => {
 })
 
 app.use("/auth", authRouter)
-app.use("/products", productRouter)
+app.use("/movies", productRouter)
 
 
 // endpoint para el 404 - no se encuentra el recurso
