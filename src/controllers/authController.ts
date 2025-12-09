@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs"
 import User from "../model/UserModel"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
-
+import { loginAndRegisterValidator } from "../validators/movieValidator"
 
 dotenv.config()
 
@@ -16,6 +16,13 @@ class AuthController {
 
       if (!email || !password) {
         return res.status(400).json({ success: false, error: "Email y contraseña son requeridos" })
+      }
+
+      //validamos con zod que sea un MAIL valido
+      const validator = loginAndRegisterValidator.safeParse(req.body)
+
+      if (!validator.success) {
+        return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
       }
 
       const user = await User.findOne({ email })
@@ -45,6 +52,13 @@ class AuthController {
 
       if (!email || !password) {
         return res.status(400).json({ success: false, error: "Email y contraseña son requeridos" })
+      }
+
+      //validamos con zod que sea un MAIL valido
+      const validator = loginAndRegisterValidator.safeParse(req.body)
+
+      if (!validator.success) {
+        return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
       }
 
       const user = await User.findOne({ email })

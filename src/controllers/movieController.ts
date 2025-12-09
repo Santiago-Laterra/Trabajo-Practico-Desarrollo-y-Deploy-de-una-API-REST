@@ -60,7 +60,7 @@ class MovieController {
         return res.status(400).json({ success: false, error: "Todos los campos son requeridos" })
       }
 
-      // VALIDACIONES DE INPUT
+      // VALIDACIONES DE INPUT CON ZOD
 
       const validator = createMovieSchema.safeParse(body)
 

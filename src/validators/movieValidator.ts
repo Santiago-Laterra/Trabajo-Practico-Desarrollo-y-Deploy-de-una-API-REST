@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { email, z } from "zod"
 
 const productSchemaValidator = z.object({
   title: z.string().min(3, "El titulo no puede estar vacio"),
@@ -9,6 +9,10 @@ const productSchemaValidator = z.object({
   director: z.string().min(3, "El nombre del director es muy corto")
 })
 
-export const createMovieSchema = productSchemaValidator
+const emailValidator = z.object({
+  email: z.string().email("Formato de email inválido")
+})
 
+export const createMovieSchema = productSchemaValidator
+export const loginAndRegisterValidator = emailValidator
 export const updatedMovieSchema = productSchemaValidator.partial()
